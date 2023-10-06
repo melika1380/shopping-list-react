@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Footer.module.css";
 
-const Footer = ({handleAddItem,setInputValue,inputValue}) => {
+const Footer = ({handleAddItem,inputValue,setInputValue}) => {
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };

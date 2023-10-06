@@ -1,43 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "./main.module.css";
-import Footer from "./Footer";
-import { saveItem, getSavedItems, removeItem } from "./localStorage";
+import { getSavedItems, removeItem } from "./localStorage";
 
-const Main = () => {
-
-  const [items, setItems] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-
+const Main = (props) => {
   useEffect(() => {
-
     const savedItems = getSavedItems();
     if (savedItems.length === 0) {
-      setItems(["task1", "task2", "task3"]);
+      props.setItems(["task1", "task2", "task3"]);
     } else {
-      setItems(savedItems);
+      props.setItems(savedItems);
     }
   }, []);
-
-  const handleAddItem = () => {
-    if (inputValue === "") {
-      alert("Please fill the box");
-    } else {
-      //saveItem(key,value)
-      saveItem(inputValue,inputValue);
-      setInputValue("");
-      setItems([...items, inputValue]);
-    }
-  };
-
   const handleDeleteItem = (text) => {
     removeItem(text);
-    setItems(items.filter((item) => item !== text));
+    props.setItems(props.items.filter((item) => item !== text));
   };
 
   return (
     <>
       <ul className={styles.main}>
-        {items.map((item) => (
+        {props.items.map((item) => (
           <li
             key={item}
             className={styles.shopLi}
@@ -51,7 +33,6 @@ const Main = () => {
           </li>
         ))}
       </ul>
-      <Footer handleAddItem={handleAddItem} setInputValue={setInputValue} inputValue={inputValue}/>
     </>
   );
 };
